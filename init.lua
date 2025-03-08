@@ -1,12 +1,14 @@
 require('config.lazy')
 require('mason').setup()
+
 require('mason-lspconfig').setup{
   ensure_installed = {'lua_ls', 'rust_analyzer'}
 }
+
 local lspconf = require('lspconfig')
+
 vim.opt.number = true;
 vim.opt.relativenumber = true;
-
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.expandtab = true
@@ -33,14 +35,7 @@ lspconf.lua_ls.setup {
 				checkThirdParty = false,
 				library = {
 					vim.env.VIMRUNTIME
-					-- Depending on the usage, you might want to add additional paths here.
-					-- "${3rd}/luv/library"
-					-- "${3rd}/busted/library",
 				}
-				-- or pull in all of 'runtimepath'.
-				-- NOTE: this is a lot slower and will cause issues when working on your own configuration
-				-- (see https://github.com/neovim/nvim-lspconfig/issues/3189)
-				-- library = vim.api.nvim_get_runtime_file("", true)
 			},
 			format = {
 				enable = true,
@@ -54,3 +49,9 @@ lspconf.lua_ls.setup {
 	settings = {
 		Lua = {}
 	} }
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
